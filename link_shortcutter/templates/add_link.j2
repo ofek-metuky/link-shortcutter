@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add link</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script>
+        function send_form(event) {
+            try {
+                let short_name = document.getElementById("short_name").value
+                let links = document.getElementById("links").value.toString().split(/\r?\n/)
+                $.post({
+                    url: "/link/",
+                    data: JSON.stringify({
+                        short_name: short_name,
+                        links: links
+                    }),
+                    contentType: 'application/json',
+                    success: function () {
+                        window.location.href = "/ui/view_links"
+                    }
+                })
+                console.log({short_name: short_name, links: links})
+            } catch {
+
+            }
+
+            return false
+        }
+    </script>
+</head>
+<body>
+<h2>add link</h2>
+<form onsubmit="return send_form()">
+    <label for="short_name">short name:</label>
+    <input type="text" id="short_name">
+    <br>
+    <br>
+    <label for="links">links (each link is row):</label>
+    <br>
+    <textarea cols="80" id="links"></textarea>
+    <br>
+    <input type="submit" value="submit">
+</form>
+</body>
+</html>

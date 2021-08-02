@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    ports:
+      - "8000:80"
+    environment:
+      db_url: "mongo-db"
+  mongo-db:
+    image: "mongo"
+    volumes:
+    - Z:/home_dbs/mongo:/data/db
