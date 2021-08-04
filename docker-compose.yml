@@ -3,7 +3,7 @@ services:
   web:
     build: .
     ports:
-      - "8000:80"
+      - "0.0.0.0:8000:80"
     environment:
       db_url: "mongo-db"
   mongo-db:
