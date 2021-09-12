@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>links for - {{ short_name }}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script>
+        function delete_link_item(short_name) {
+            $.ajax({
+                url: `/link/${short_name}`,
+                type: "delete",
+                success: function (){
+                    window.location.href = "/ui/view_links"
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<h2>all links</h2>
+{% for link_item in link_items %}
+    <h3>{{ link_item.short_name }}</h3>
+    {% for link in link_item.links %}
+        <a href="{{ link }}"><h4>{{ link }}</h4></a>
+    {% endfor %}
+    <h3><a href="/ui/edit_links/{{ link_item.short_name }}">Edit</a></h3>
+    <input type="button" onclick="delete_link_item('{{ link_item.short_name }}')" value="Delete links"/>
+{% endfor %}
+<br>
+<br>
+<br>
+<h3><a href="/ui/add_link">Add link</a></h3>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update link - {{ link_item.short_name }}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script>
+        function send_form() {
+            try {
+                let short_name = "{{ link_item.short_name }}"
+                let links = document.getElementById("links").value.toString().split(/\r?\n/)
+                $.ajax({
+                    type: "put",
+                    url: "/link/",
+                    data: JSON.stringify({
+                        short_name: short_name,
+                        links: links
+                    }),
+                    contentType: 'application/json',
+                    success: function () {
+                        window.location.href = "/ui/view_links"
+                    }
+                })
+                console.log({short_name: short_name, links: links})
+            } catch {
+
+            }
+
+            return false
+        }
+
+        function delete_link_item(short_name) {
+            $.ajax({
+                url: `/link/${short_name}`,
+                type: "delete",
+                success: function () {
+                    window.location.href = "/ui/view_links"
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<h2>update links for - {{ link_item.short_name }}</h2>
+<form onsubmit="return send_form()">
+    <label for="links">links (each link is row):</label>
+    <br>
+    <textarea cols="80" id="links">{{ link_item.links|join('\n') }}</textarea>
+    <br>
+    <input type="submit" value="submit">
+</form>
+<br>
+<br>
+<input type="button" onclick="delete_link_item('{{ short_name }}')" value="Delete links"/>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>links for - {{ short_name }}</title>
+    <script>
+        function delete_link_item(short_name) {
+            $.ajax({
+                url: `/link/${short_name}`,
+                type: "delete",
+                success: function () {
+                    window.location.href = "/ui/view_links"
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<h2>links for - {{ short_name }}</h2>
+{% for link in links %}
+    <a href="{{ link }}"><h4>{{ link }}</h4></a>
+{% endfor %}
+<input type="button" onclick="delete_link_item('{{ short_name }}')" value="Delete links"/>
+</body>
+</html>
